@@ -9,9 +9,9 @@ const SettingsLayout = () => {
   const pathname = location.pathname;
 
   return (
-    <section className="w-full flex justify-start  md:h-[calc(100dvh-81px)]">
+    <section className="w-full flex justify-start  md:h-[calc(100dvh-81px)] dark:bg-neutral-950 bg-neutral-0 dark:text-neutral-0">
       <aside className="md:w-[290px] h-full flex flex-col justify-start items-center   px-5 py-5">
-        <ul className="w-full flex flex-col justify-start items-center gap-1 pb-2 border-b border-b-neutral-200">
+        <ul className="w-full flex flex-col justify-start items-center gap-1 pb-2 border-b border-b-neutral-200 dark:border-neutral-800">
           <CustomLink
             to="/settings/color-theme"
             label="Color Theme"
@@ -39,7 +39,7 @@ const SettingsLayout = () => {
           />
         </ul>
       </aside>
-      <aside className="flex-1 h-full bg-neutral-0 px-6 py-5 flex flex-col justify-start items-start border-x border-neutral-200">
+      <aside className="flex-1 h-full  p-8 flex flex-col justify-start items-start border-x border-neutral-200 dark:border-neutral-800">
         <Outlet />
       </aside>
     </section>

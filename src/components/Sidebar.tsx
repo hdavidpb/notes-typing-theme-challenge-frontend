@@ -25,22 +25,22 @@ export const Sidebar = () => {
   const type = searchParams.get("type") ?? "";
 
   return (
-    <aside className="md:w-[272px]  min-h-screen py-3 px-4 flex flex-col justify-start border-r border-neutral-200">
+    <aside className="md:w-[272px]  min-h-screen py-3 px-4 flex flex-col justify-start border-r border-neutral-200 dark:border-neutral-800 dark:bg-neutral-950">
       <div className="w-full mb-4 py-3">
         <Logo />
       </div>
-      <ul className="w-full flex flex-col justify-start items-center gap-1 pb-2 border-b border-b-neutral-200">
+      <ul className="w-full flex flex-col justify-start items-center gap-1 pb-2 border-b border-b-neutral-200 dark:border-neutral-800">
         <CustomLink
           to="/notes?type=all"
           label="All Notes"
-          isActive={type === "/notes?type=all"}
+          isActive={type === "all"}
           Icon={<HomeIcon width={20} height={20} isSelected={type === "all"} />}
         />
 
         <CustomLink
           to="/notes?type=archived"
           label="Archived Notes"
-          isActive={type === "/notes?type=archived"}
+          isActive={type === "archived"}
           Icon={
             <ArchiveIcon
               width={20}

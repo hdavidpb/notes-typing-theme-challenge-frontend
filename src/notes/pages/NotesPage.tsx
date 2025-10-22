@@ -9,7 +9,7 @@ import { NoteCard } from "../components/NoteCard";
 const NotesPage = () => {
   return (
     <section className="w-full flex justify-start  md:h-[calc(100dvh-81px)]">
-      <aside className="md:w-[290px] h-full flex flex-col justify-start items-center  px-5 py-5">
+      <aside className="md:w-[290px] h-full flex flex-col justify-start items-center  px-5 py-5 bg-neutral-0 dark:bg-neutral-950">
         <UIButton className="flex justify-center items-center gap-2 w-full">
           <PlusIcon />
           <span>Create New Note</span>
@@ -21,8 +21,8 @@ const NotesPage = () => {
 
         </div>
       </aside>
-      <aside className="flex-1 h-full bg-neutral-0 px-6 py-5 flex flex-col justify-start items-start border-x border-neutral-200">
-        <div className="w-full flex flex-col justify-start items-start border-b border-neutral-200">
+      <aside className="flex-1 h-full bg-neutral-0 dark:bg-neutral-950 px-6 py-5 flex flex-col justify-start items-start border-x border-neutral-200 dark:border-neutral-800 dark:text-neutral-0">
+        <div className="w-full flex flex-col justify-start items-start border-b border-neutral-200 dark:border-neutral-800">
           <div className="w-full h-[29px] mb-4">
             <input className="w-full h-full text-2xl bg-transparent border-none outline-none pl-0.5" placeholder="Enter a title..."/>
           </div>
@@ -42,7 +42,7 @@ const NotesPage = () => {
           </div>
 
         </div>
-        <div className="w-full flex-1 mt-4 border-b border-neutral-200">
+        <div className="w-full flex-1 mt-4 border-b border-neutral-200 dark:border-neutral-800">
           <textarea className="w-full h-full border-none outline-none pr-0.5 resize-none" placeholder="Start typing note here..."/>
         </div>
 
@@ -52,9 +52,9 @@ const NotesPage = () => {
         </div>
         
       </aside>
-      <aside className="md:w-[258px] px-4 py-5 h-full flex flex-col justify-start gap-3">
+      <aside className="md:w-[258px] px-4 py-5 h-full flex flex-col justify-start gap-3 bg-neutral-0 dark:bg-neutral-950">
         <UIButton btnType="border" className="w-full flex justify-start items-center gap-2">
-          <ArchiveIcon width={20} height={20}/>
+          <ArchiveIcon width={20} height={20} />
           <span>Archive Note</span>
         </UIButton >
             <UIButton btnType="border" className="w-full flex justify-start items-center gap-2">

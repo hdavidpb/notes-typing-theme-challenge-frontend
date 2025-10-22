@@ -4,7 +4,7 @@ import { SettingIcon } from "./icons/SettingIcon";
 
 export const CustomNavbar = () => {
   return (
-    <nav className="w-full flex justify-between items-center h-[81px] px-8 border-b border-neutral-200">
+    <nav className="w-full flex justify-between items-center h-[81px] px-8 border-b border-neutral-200 bg-neutral-0 dark:bg-neutral-950 dark:text-neutral-0 dark:border-neutral-800">
       <span className="text-2xl font-semibold">ALL Notes</span>
       <div className="flex justify-center items-center gap-4">
         <div className="w-[358px] h-[44px] border border-neutral-200 rounded-lg flex justify-start items-center px-4 gap-2">
