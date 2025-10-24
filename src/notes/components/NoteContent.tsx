@@ -4,6 +4,7 @@ import { ClockCircleIcon } from "../../components/icons/ClockCircleIcon";
 import { TagIcon } from "../../components/icons/TagIcon";
 import { UIButton } from "../../components/ui/UIButton";
 import type { Note } from "../types/notes.type";
+import { formattedDate } from "../../utils/formatedDate";
 
 
 
@@ -47,7 +48,13 @@ export const NoteContent = ({note,onSubmit}:Props) => {
             placeholder="Add tags separated by commas (e.g. Work, Planing)"
             {...register("tags",{required:{
               value:true,message:"Tags are required."
-            },validate:(value)=>(value.includes(",") && !value.startsWith(","))|| "Tags must be separated by commas: ','"})}
+            },validate:(value)=>{
+              const valueArr = value.split(",");
+              if(valueArr.length === 0) return "You must add at least one tag";
+              if(value.startsWith(",")) return "Value must not start with comma"
+
+              }})
+            } 
           />
         {errors.tags && (<span className="text-xs text-red-500">{errors.tags.message}</span>)}
 
@@ -58,7 +65,7 @@ export const NoteContent = ({note,onSubmit}:Props) => {
             <ClockCircleIcon width={16} height={16} />
             <span>Last edited</span>
           </div>
-          <span className="text-sm text-neutral-400"> Not yet saved</span>
+          <span className="text-sm text-neutral-400"> {note.updatedAt ? formattedDate(note.updatedAt): "Not yet saved"}</span>
         </div>
       </div>
       <div className="w-full flex-1 mt-4 border-b border-neutral-200 dark:border-neutral-800">

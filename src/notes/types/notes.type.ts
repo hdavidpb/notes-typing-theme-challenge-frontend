@@ -9,6 +9,6 @@ export interface Note {
     tags:string;
     content:string;
     status?:'active' | 'archived';
-    updatedAt?:string;
+    updatedAt?:number;
 }
 

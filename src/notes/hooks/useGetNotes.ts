@@ -8,7 +8,7 @@ export const useGetNotes = ({query,status,tag}:SearchTypes) => {
 
   return  useQuery({
     queryKey:["notes",{query,status,tag}],
-    queryFn:()=>getNotes({status,tag}),
+    queryFn:()=>getNotes({status,tag,query}),
     retry:false,
     staleTime: 1000 * 60 * 5, // 5 minutes,
   })

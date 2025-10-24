@@ -19,7 +19,7 @@ export const getNotesAction = async ({query,status,tag}:SearchTypes):Promise<Not
 
 
     if(query) {
-        const notes = Object.values(currentNotes).filter((note)=>note.title.toLowerCase().includes(query.toLowerCase()) || note.tags.includes(query.toLowerCase()));
+        const notes = Object.values(currentNotes).filter((note)=>note.title.toLowerCase().includes(query.toLowerCase()) || note.content.toLowerCase().includes(query.toLowerCase()) || note.tags.toLowerCase().includes(query.toLowerCase()));
         const newNotes = notes.reduce((acc,note)=> {
             acc[note.id] = note;
             return acc;
@@ -29,8 +29,8 @@ export const getNotesAction = async ({query,status,tag}:SearchTypes):Promise<Not
         return currentNotes;
     }
 
-    if(status) {
-        const notes = Object.values(currentNotes).filter((note)=>note.status === status);
+    if(status === "archived") {
+        const notes = Object.values(currentNotes).filter((note)=>note.status === "archived");
         const newNotes = notes.reduce((acc,note)=> {
             acc[note.id] = note;
             return acc;
