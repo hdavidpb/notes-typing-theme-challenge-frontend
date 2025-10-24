@@ -19,7 +19,7 @@ export const SelectThemeBox = ({ title, description, Icon,name,isChecked,handleC
           <span className="text-xs">{description}</span>
         </div>
       </div>
-      <input checked={isChecked} id={title} name={name} type="radio" className="w-4 h-4 accent-blue-500" />
+      <input readOnly checked={isChecked} id={title} name={name} type="radio" className="w-4 h-4 accent-blue-500" />
     </button>
   );
 };

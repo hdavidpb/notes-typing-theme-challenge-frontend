@@ -8,12 +8,12 @@ export const ChevronIcon = () => {
       xmlns="http://www.w3.org/2000/svg"
       className="stroke-neutral-800 dark:stroke-neutral-0"
     >
-      <g clip-path="url(#clip0_2375_421)">
+      <g clipPath="url(#clip0_2375_421)">
         <path
           d="M1 1L5 5L1 9"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </g>
       <defs>

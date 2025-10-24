@@ -1,28 +1,48 @@
-import { Link, useSearchParams } from "react-router";
+import {  useSearchParams } from "react-router";
 import { ArchiveIcon } from "./icons/ArchiveIcon";
 import { ChevronIcon } from "./icons/ChevronIcon";
 import { HomeIcon } from "./icons/HomeIcon";
 import { Logo } from "./Logo";
-import { TagIcon } from "./icons/TagIcon";
+import { TagIcon } from './icons/TagIcon';
 import { CustomLink } from "./ui/CustomLink";
+import { useGetNotes } from "../notes/hooks/useGetNotes";
 
-const TAGS = [
-  "Cooking",
-  "Dev",
-  "Fitness",
-  "Health",
-  "personal",
-  "React",
-  "Recipes",
-  "Shopping",
-  "Travel",
-  "Typescript",
-];
 
 export const Sidebar = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams,setSearchParams] = useSearchParams();
+  
 
-  const type = searchParams.get("type") ?? "";
+  const tagParam = searchParams.get("tag") ?? "";
+  
+  const typeSearch = (searchParams.get("type") || '') as "active" | "archived";
+  
+  
+  const { data } = useGetNotes({status:typeSearch});
+
+  const tags = data?  [...new Set( Object.values(data).map((note)=> {
+   return note.tags.split(",")
+  }).reduce((acc,item)=>  {
+    acc = [...acc,...item];
+  return acc;
+
+  },[]) )] :[];
+
+
+
+
+const handleChangeTag = (tag:string) => {
+  
+  if(tagParam === tag) return;
+
+      setSearchParams((prev) => {
+        prev.set("tag", tag);
+        return prev;
+      })
+    }
+
+    
+   
+
 
   return (
     <aside className="md:w-[272px]  min-h-screen py-3 px-4 flex flex-col justify-start border-r border-neutral-200 dark:border-neutral-800 dark:bg-neutral-950">
@@ -31,46 +51,48 @@ export const Sidebar = () => {
       </div>
       <ul className="w-full flex flex-col justify-start items-center gap-1 pb-2 border-b border-b-neutral-200 dark:border-neutral-800">
         <CustomLink
-          to="/notes?type=all"
+          to="/notes?type=active"
           label="All Notes"
-          isActive={type === "all"}
-          Icon={<HomeIcon width={20} height={20} isSelected={type === "all"} />}
+          isActive={typeSearch === "active"}
+          Icon={<HomeIcon width={20} height={20} isSelected={typeSearch === "active"} />}
+
         />
 
         <CustomLink
-          to="/notes?type=archived"
+        to="/notes?type=archived"
           label="Archived Notes"
-          isActive={type === "archived"}
+          isActive={typeSearch === "archived"}
           Icon={
             <ArchiveIcon
               width={20}
               height={20}
-              isSelected={type === "archived"}
+              isSelected={typeSearch === "archived"}
             />
           }
+
         />
       </ul>
       <figure className="w-full flex flex-col justify-start items-start py-2">
         <span className="mb-2 text-sm">Tags</span>
         <ul className=" w-full flex flex-col justify-start items-start overflow-y-auto">
-          {TAGS.map((tag) => (
-            <Link
+          {tags.map((tag) => (
+            <li
               key={tag}
-              to={`/notes?type=${tag}`}
-              className={`px-3 w-full h-10 flex justify-between items-center rounded-lg dark:text-neutral-50 ${
-                type === tag
+              onClick={()=>handleChangeTag(tag.trim())}
+              className={`cursor-pointer px-3 w-full h-10 flex justify-between items-center rounded-lg dark:text-neutral-50 ${
+                tagParam === tag.trim()
                   ? "bg-neutral-100 dark:bg-neutral-800"
                   : "bg-white dark:bg-neutral-950"
               }`}
             >
               <div className="w-full h-full flex justify-between items-center">
                 <div className="flex justify-start gap-2 items-center">
-                  <TagIcon width={20} height={20} isSelected={type === tag} />
+                  <TagIcon width={20} height={20} isSelected={tagParam === tag.trim()} />
                   <span className="text-sm">{tag}</span>
                 </div>
-                {type === tag && <ChevronIcon />}
+                {tagParam === tag.trim() && <ChevronIcon />}
               </div>
-            </Link>
+            </li>
           ))}
         </ul>
       </figure>

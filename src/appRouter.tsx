@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate } from "react-router";
 import { lazy } from "react";
 import AppLayout from "./layouts/AppLayout";
 import SettingsLayout from "./settings/layouts/SettingsLayout";
+import NotesLayout from "./notes/layouts/NotesLayout";
 
 
 
@@ -16,9 +17,13 @@ export const appRouter = createBrowserRouter([
         element:<AppLayout />,
         children:[
             {
-                index:true,
-                path:"notes",
-                element:<LazyNotes/>
+                path:"/notes",
+                element:<NotesLayout/>,
+                children:[{
+                    index:true,
+                    path:":noteId",
+                    element:<LazyNotes />
+                }]
             },
             {
                 path:"/settings",
