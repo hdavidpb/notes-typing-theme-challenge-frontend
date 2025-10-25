@@ -1,20 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { getNoteByIdAction } from "../actions/get-note-by-id.action"
-import { useNoteStore } from "../store/useNoteStore";
 import { useNavigate } from "react-router";
 import { deleteNote } from "../actions/delete-note.action";
 import { updateToggleStatusNote } from "../actions/update-note-to-archived.action";
-
-
-
+import { updateNotesAction } from "../actions/post-update-notes.action";
 export const useGetNoteById = (noteId:string) => {
   const navigate = useNavigate();
-
- 
   const queryClient =  useQueryClient();
-
-    const updateNotes = useNoteStore((store)=> store.updateNotes);
-
 
     const query = useQuery({
         queryKey:["note",{noteId}],
@@ -24,15 +16,23 @@ export const useGetNoteById = (noteId:string) => {
     });
 
     const mutation = useMutation({
-        mutationFn:updateNotes,
-        onSuccess: (value) => {
-            console.log("SE AGREGO O ACTUALIZO NOTES: ",value);
+        mutationFn:updateNotesAction,
+        onSuccess: (notes) => {
+            console.log("SE AGREGO O ACTUALIZO NOTES: ",notes);
 
             //TODO: Agregar toast
  
-            queryClient.invalidateQueries({ queryKey: ["notes","note"],type:'all' });
+            queryClient.invalidateQueries({ queryKey: ["notes"],type:'all' });
+            queryClient.invalidateQueries({ queryKey: ["note"],type:'active' });
+            let noteRefId:number;
+            if(isNaN(+noteId)) {
+              const notesKeys = Object.values(notes);
+              const lastNote = notesKeys[notesKeys.length - 1];
+              noteRefId = notes[lastNote.id].id;
+            }else {
+              noteRefId = notes[+noteId].id;
+            }
 
-            const noteRefId = value[+noteId].id;
 
            navigate(`/notes/${noteRefId}${window.location.search}`);
         }

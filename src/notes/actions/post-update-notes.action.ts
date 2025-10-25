@@ -13,11 +13,11 @@ export const updateNotesAction = async (note:Note):Promise<Notes> => {
             ...newNotes,
             [note.id]:note
         };
-        
+        localStorage.setItem("notes",JSON.stringify(newNotes))
         return newNotes;
     };
 
     newNotes[note.id] = note;
-    
+    localStorage.setItem("notes",JSON.stringify(newNotes))
     return newNotes;
 }
