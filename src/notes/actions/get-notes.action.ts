@@ -1,3 +1,5 @@
+import { apiTask } from "../../api/notes.api";
+import type { NotesResponse } from "../types/notes.response";
 import type {  Notes } from "../types/notes.type";
 
 export type SearchTypes = {
@@ -53,5 +55,23 @@ export const getNotesAction = async ({query,status,tag}:SearchTypes):Promise<Not
     return currentNotes;
 
 
+
+}
+
+
+
+export const getAllNotes = async ({query,status,tag}:SearchTypes)=> {
+
+
+    try {
+
+        const {data} = await apiTask.get<NotesResponse[]>("/task/all",{params:{query,status,tag}});
+
+        console.log({data})
+        return data
+
+    } catch (error) {
+        return [];
+    }
 
 }
