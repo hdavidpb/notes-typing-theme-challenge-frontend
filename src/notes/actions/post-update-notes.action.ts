@@ -1,23 +1,27 @@
-import type { Note, Notes } from "../types/notes.type";
+import { apiTask } from "../../api/notes.api";
+import type { Note } from "../types/notes.response";
 
 
-export const updateNotesAction = async (note:Note):Promise<Notes> => {
 
-    const  storageNotes:Notes = JSON.parse(localStorage.getItem("notes") ?? "{}") as Notes ;
+export const updateNote = async (
+  note: Partial<Note>
+): Promise<Partial<Note> | null>  => {
+  try {
+    if (note._id) {
+        await apiTask.patch<Partial<Note>>(
+        `/task/${note._id}`,note
+      );
 
-    let newNotes = {...storageNotes};
+      return note;
+    }
 
+    const { data } = await apiTask.post<Partial<Note>>(
+      "/task/create",
+      note
+    );
 
-    if(storageNotes[note.id]) { 
-        newNotes = {
-            ...newNotes,
-            [note.id]:note
-        };
-        localStorage.setItem("notes",JSON.stringify(newNotes))
-        return newNotes;
-    };
-
-    newNotes[note.id] = note;
-    localStorage.setItem("notes",JSON.stringify(newNotes))
-    return newNotes;
-}
+    return data;
+  } catch (error) {
+    return null;
+  }
+};

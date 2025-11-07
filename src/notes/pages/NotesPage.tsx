@@ -2,7 +2,7 @@ import { useParams } from "react-router";
 import { NoteActions } from "../components/NoteActions";
 import { NoteContent } from "../components/NoteContent";
 import { useGetNoteById } from "../hooks/useGetNoteById";
-import type { Note } from "../types/notes.type";
+import type { Note, NoteToEdit } from "../types/notes.response";
 
 
 
@@ -17,12 +17,10 @@ const NotesPage = () => {
   </span>;
 
 
-  const onSubmit = (note:Note) => {
+  const onSubmit = (note:NoteToEdit) => {
     const newNote:Note =  {
       ...note,
-      id:note.id ?? new Date().getTime(),
-      updatedAt: new Date().getTime(),
-      
+      tags:note.tags.split(",")
     }
 
      mutation.mutateAsync(newNote);
@@ -34,7 +32,16 @@ const NotesPage = () => {
 
   
   const handleUpdateToggleStatusNote = ()=>{
-    updateNoteStatusMutation.mutateAsync(noteId!)
+    let status:'active' | 'archived' ="archived";
+
+    if(data.status === "active") {
+      status = "archived"
+    }else {
+      status = "active"
+    }
+
+
+    updateNoteStatusMutation.mutateAsync(status)
   };
  
  

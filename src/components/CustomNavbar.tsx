@@ -33,7 +33,7 @@ export const CustomNavbar = () => {
             onKeyUp={handleKeyUp}
             ref={inputRef}
             className="w-full h-full border-none outline-none placeholder:text-neutral-500"
-            placeholder="Search by title, content, or tags..."
+            placeholder="Search by title"
           />
         </div>
         <Link to="/settings/color-theme" className="cursor-pointer">

@@ -13,7 +13,7 @@ export const NotesList = memo(() => {
   const [searchParams] = useSearchParams();
 
   const tag = searchParams.get("tag") || undefined;
-  const status = (searchParams.get("type") || "active") as
+  const status = (searchParams.get("type") || undefined) as
     | "active"
     | "archived";
   const query = searchParams.get("query") || undefined;
@@ -37,7 +37,7 @@ export const NotesList = memo(() => {
         {(isLoading || isFetching) && <Spinner/>}
         {data &&
           Object.values(data).map((note) => (
-            <NoteCard key={note.id} note={note} />
+            <NoteCard key={note._id} note={note} />
           ))}
           {(!isLoading && Object.values(data!).length ===0) && (<span className="text-sm">No notes founded.</span>)}
       </div>

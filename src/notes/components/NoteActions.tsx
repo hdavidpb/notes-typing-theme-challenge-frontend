@@ -2,7 +2,7 @@ import { memo, useRef } from "react";
 import { ArchiveIcon } from "../../components/icons/ArchiveIcon";
 import { TrashIcon } from "../../components/icons/TrashIcon";
 import { UIButton } from "../../components/ui/UIButton";
-import type { Note } from "../types/notes.type";
+import type { Note } from "../types/notes.response";
 
 
 interface Props {

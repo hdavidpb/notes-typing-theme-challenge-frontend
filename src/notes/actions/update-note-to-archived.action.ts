@@ -1,21 +1,20 @@
-import type { Notes } from "../types/notes.type";
+import { apiTask } from "../../api/notes.api";
+import type { Note } from "../types/notes.response";
 
-export const updateToggleStatusNote = async (
-  noteId: string
-): Promise<Notes> => {
-  const parsedId = +noteId;
 
-  const storageNotes: Notes = JSON.parse(localStorage.getItem("notes") || "{}");
 
-  if (!storageNotes[parsedId]) return storageNotes;
 
-  if (storageNotes[parsedId].status === "active") {
-    storageNotes[parsedId].status = "archived";
-  } else {
-    storageNotes[parsedId].status = "active";
+export const updateNoteStatus = async (
+  noteId:string,
+  status:'active' | 'archived'
+): Promise<string>  => {
+  try {
+      await apiTask.patch<Partial<Note>>(
+        `/task/${noteId}`,{status}
+      );
+
+      return noteId;
+  } catch (error) {
+    return noteId;
   }
-
-  localStorage.setItem("notes",JSON.stringify(storageNotes))
-
-  return storageNotes;
 };

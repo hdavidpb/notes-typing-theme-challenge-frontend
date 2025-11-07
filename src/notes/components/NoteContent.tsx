@@ -3,21 +3,21 @@ import {useForm} from "react-hook-form"
 import { ClockCircleIcon } from "../../components/icons/ClockCircleIcon";
 import { TagIcon } from "../../components/icons/TagIcon";
 import { UIButton } from "../../components/ui/UIButton";
-import type { Note } from "../types/notes.type";
 import { formattedDate } from "../../utils/formatedDate";
+import type { Note, NoteToEdit } from "../types/notes.response";
 
 
 
 interface Props {
   note:Note;
-  onSubmit: (note: Note) => void
+  onSubmit: (note: NoteToEdit) => void
 
 }
 
 export const NoteContent = ({note,onSubmit}:Props) => {
 
   const {register,handleSubmit,formState:{errors}} = useForm({
-    values:note,
+    values:{...note,tags:note.tags.join(",")},
   })
 
   const onSubmitted = handleSubmit((values)=> {
@@ -65,14 +65,14 @@ export const NoteContent = ({note,onSubmit}:Props) => {
             <ClockCircleIcon width={16} height={16} />
             <span>Last edited</span>
           </div>
-          <span className="text-sm text-neutral-400"> {note.updatedAt ? formattedDate(note.updatedAt): "Not yet saved"}</span>
+          <span className="text-sm text-neutral-400"> {note.updatedAt ? formattedDate(new Date(note.updatedAt).getTime()): "Not yet saved"}</span>
         </div>
       </div>
       <div className="w-full flex-1 mt-4 border-b border-neutral-200 dark:border-neutral-800">
         <textarea
-          className={`w-full h-full outline-none pr-0.5 resize-none ${errors.content ? "border-b border-red-500 transition-all ease-in-out duration-300" : "border-none"}`}
+          className={`w-full h-full outline-none pr-0.5 resize-none ${errors.description ? "border-b border-red-500 transition-all ease-in-out duration-300" : "border-none"}`}
           placeholder="Start typing note here..."
-          {...register("content",{validate:(value)=>!!value.trim() || "Este campo es requerido." })}
+          {...register("description",{validate:(value)=>!!value?.trim() || "Este campo es requerido." })}
         />
       </div>
 

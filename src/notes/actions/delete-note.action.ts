@@ -1,19 +1,13 @@
-import type  { Notes } from '../types/notes.type';
+import { apiTask } from "../../api/notes.api";
 
+export const deleteNote = async (noteId: string): Promise<boolean> => {
+  try {
+    await apiTask.delete<{ message: string; deletedCount: number }>(
+      `task/${noteId}`
+    );
 
-export const deleteNote = async (noteId:string):Promise<Notes> => {
-    const parsedId = +noteId;
-
-   const storageNotes:Notes = JSON.parse(localStorage.getItem("notes") || "{}") as Notes;
-
-   if(!storageNotes[parsedId]) {
-         return storageNotes;
-   }
-
-   delete storageNotes[parsedId];
-
-   localStorage.setItem("notes",JSON.stringify(storageNotes))
-
-   return storageNotes;
-
-}
+    return true;
+  } catch (error) {
+    return false;
+  }
+};

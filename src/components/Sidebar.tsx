@@ -14,13 +14,13 @@ export const Sidebar =  () => {
   const tagParam = searchParams.get("tag") ?? "";
   const typeSearch = (searchParams.get("type") || '') as "active" | "archived";
   
-  const { data } = useGetNotes({status:'active'});
+  const { data } = useGetNotes({status:typeSearch});
 
   const tags =  useMemo(()=> {
   if(data) {
   return (
-    [...new Set( Object.values(data).map((note)=> {
-   return note.tags.split(",")
+    [...new Set( data.map((note)=> {
+   return note.tags
   }).reduce((acc,item)=>  {
     acc = [...acc,...item];
   return acc;
@@ -52,10 +52,10 @@ const handleChangeTag = (tag:string) => {
       </div>
       <ul className="w-full flex flex-col justify-start items-center gap-1 pb-2 border-b border-b-neutral-200 dark:border-neutral-800">
         <CustomLink
-          to="/notes?type=active"
+          to="/notes"
           label="All Notes"
-          isActive={typeSearch === "active"}
-          Icon={<HomeIcon width={20} height={20} isSelected={typeSearch === "active"} />}
+          isActive={typeSearch !== "archived"}
+          Icon={<HomeIcon width={20} height={20} isSelected={typeSearch !== "archived"} />}
 
         />
 

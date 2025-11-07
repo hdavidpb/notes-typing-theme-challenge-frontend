@@ -1,29 +1,31 @@
-import type { Note, Notes } from "../types/notes.type";
+import { apiTask } from "../../api/notes.api";
+import type { Note } from "../types/notes.response";
 
 
-export const getNoteByIdAction = async (noteId:string):Promise<Note> => {
 
-    const storageNotes:Notes = JSON.parse(localStorage.getItem("notes") ?? "{}") as Notes ;
 
-    if(isNaN(Number(noteId))) {
+
+export const getNoteById = async (noteId:string):Promise<Note | null>=> {
+
+   if(noteId === "create") {
         return {
             title:"",
-            content:"",
-            tags:"",
+            description:"",
+            tags:[],
+            status:""
+
         } as Note;
+   }
+
+    try {
+
+        const {data} = await apiTask.get<Note>(`/task/${noteId}`);
+
+        console.log({data})
+        return data
+
+    } catch (error) {
+        return null;
     }
 
-    const note = storageNotes[+noteId];
-
-    if(!note) {
-        return {
-            title:"",
-            content:"",
-            tags:"",
-        } as Note;
-    }
-
-    return note;
-
-
-};
+}
