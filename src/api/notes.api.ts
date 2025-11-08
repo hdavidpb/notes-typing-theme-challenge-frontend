@@ -8,10 +8,30 @@ export const apiTask = axios.create({
 })
 
 apiTask.interceptors.request.use((config)=> {
+    const access_token = localStorage.getItem("access_token");
 
-
-    config.headers.Authorization = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OTBjZTVmNDA0ZDJiZTBlN2EyNGIxNWUiLCJlbWFpbCI6Imhlcm5hbi5wbGF6YWJzQGdtYWlsLmNvbSIsIm5hbWUiOiJEYXZpZCIsImlhdCI6MTc2MjUyODE0NywiZXhwIjoxNzYyNjE0NTQ3fQ.f055R2aflf6XXy2WKH5xOzm5MYoPfMUufA52cIjjnsM"
+    if(access_token) {
+        config.headers.Authorization = `Bearer ${access_token}`
+    }
 
     return config;
 
-})
+});
+
+
+apiTask.interceptors.response.use(response => response,
+    async (error) => {
+        if (error.response.status === 401) {    
+            
+            localStorage.removeItem("access_token");
+            localStorage.removeItem("refresh_token");
+
+            window.alert("Sesión expirada, por favor inicia sesión de nuevo.");
+
+            window.location.href = "/auth";
+
+            console.log("UNAUTHORIZED - 401");
+        }
+        return Promise.reject(error);
+    }
+);

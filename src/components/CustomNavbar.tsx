@@ -2,11 +2,15 @@ import { Link, useSearchParams } from "react-router";
 import { SearchIcon } from "./icons/SearchIcon";
 import { SettingIcon } from "./icons/SettingIcon";
 import { useRef } from "react";
+import { UIButton } from "./ui/UIButton";
+import { useAuthStore } from "../auth/store/auth.store";
 
 export const CustomNavbar = () => {
 
   const [searchParams,setSearchParams] = useSearchParams()
   const inputRef = useRef<HTMLInputElement>(null);
+  const authStatus = useAuthStore(store => store.authStatus);
+  const logout = useAuthStore(store => store.logout);
 
   const query = searchParams.get("query") || "";
 
@@ -39,6 +43,8 @@ export const CustomNavbar = () => {
         <Link to="/settings/color-theme" className="cursor-pointer">
           <SettingIcon />
         </Link>
+        {authStatus === "authenticated" && <UIButton onClick={logout} className="bg-red-500">Logout</UIButton>}
+        
       </div>
     </nav>
   );

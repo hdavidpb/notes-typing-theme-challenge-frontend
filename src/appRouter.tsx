@@ -3,6 +3,11 @@ import { lazy } from "react";
 import AppLayout from "./layouts/AppLayout";
 import SettingsLayout from "./settings/layouts/SettingsLayout";
 import NotesLayout from "./notes/layouts/NotesLayout";
+import AuthLayout from "./auth/AuthLayout";
+import LoginPage from "./auth/login/LoginPage";
+import RegisterPage from "./auth/register/RegisterPage";
+import { ProtectedRoute } from "./notes/components/ProtectedRoute";
+import { ProtectedAuthRoute } from "./auth/components/ProtectedRoute";
 
 
 
@@ -14,7 +19,7 @@ const FontThemeLazePage = lazy(()=>import("./settings/pages/FontThemePage"));
 export const appRouter = createBrowserRouter([
     {
         path:"/",
-        element:<AppLayout />,
+        element: <ProtectedRoute><AppLayout /></ProtectedRoute> ,
         children:[
             {
                 path:"/notes",
@@ -46,6 +51,22 @@ export const appRouter = createBrowserRouter([
             },
             
         ],
+    },
+    {
+        path:"/auth",
+        element:<ProtectedAuthRoute>
+            <AuthLayout />
+            </ProtectedAuthRoute> ,
+        children:[
+            {
+                index:true,
+                element:<LoginPage/>
+            },
+             {
+                path:"register",
+                element:<RegisterPage/>
+            }
+        ]
     },
     {
         path:"*",
