@@ -4,10 +4,13 @@ import { useGetNotes } from "../hooks/useGetNotes";
 
 import { NoteCard } from "./NoteCard";
 import { UIButton } from "../../components/ui/UIButton";
-import { memo } from "react";
+import { Activity, memo } from "react";
 import { Spinner } from "../../components/icons/Spinner";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 export const NotesList = memo(() => {
+  const isMobile = useIsMobile();
+
   const { noteId } = useParams();
 
   const [searchParams] = useSearchParams();
@@ -18,29 +21,40 @@ export const NotesList = memo(() => {
     | "archived";
   const query = searchParams.get("query") || undefined;
 
-  const { isLoading,isFetching, data } = useGetNotes({ status, tag ,query});
-
+  const { isLoading, isFetching, data } = useGetNotes({ status, tag, query });
 
   return (
     <aside
-      className={`md:w-[290px] h-full flex flex-col justify-start items-center  px-5 py-5 bg-neutral-0 dark:bg-neutral-950 ${
+      className={`md:w-[290px] w-full h-full flex flex-col justify-start items-center  px-5 py-5 bg-neutral-0 dark:bg-neutral-950 ${
         !noteId ? "border-r border-neutral-200 dark:border-neutral-800" : ""
       }`}
     >
-      <Link to={"/notes/create"}>
-        <UIButton className="flex justify-center items-center gap-2 w-full">
+      <Activity mode={isMobile ? "hidden" : "visible"}>
+        <Link to={"/notes/create"}>
+          <UIButton className="flex justify-center items-center gap-2 w-full">
+            <PlusIcon />
+            <span>Create New Note</span>
+          </UIButton>
+        </Link>
+      </Activity>
+      <Activity mode={(isMobile && noteId) ? "hidden" : "visible"}>
+
+      <div className="relative w-full flex-1 flex-col justify-start items-center overflow-y-auto mt-4">
+        {(isLoading || isFetching) && <Spinner />}
+        {data && data.map((note) => <NoteCard key={note._id} note={note} />)}
+        {!isLoading && data!.length === 0 && (
+          <span className="text-sm">No notes founded.</span>
+        )}
+
+        <Link
+          className="absolute right-4 bottom-4 w-16 h-16 flex justify-center items-center rounded-full bg-blue-500"
+          to={"/notes/create"}
+        >
           <PlusIcon />
-          <span>Create New Note</span>
-        </UIButton>
-      </Link>
-      <div className="w-full flex-1 flex-col justify-start items-center overflow-y-auto mt-4">
-        {(isLoading || isFetching) && <Spinner/>}
-        {data &&
-          Object.values(data).map((note) => (
-            <NoteCard key={note._id} note={note} />
-          ))}
-          {(!isLoading && Object.values(data!).length ===0) && (<span className="text-sm">No notes founded.</span>)}
+        </Link>
       </div>
+
+      </Activity>
     </aside>
   );
 });
