@@ -2,7 +2,6 @@ import { Link, useSearchParams } from "react-router";
 import { SearchIcon } from "./icons/SearchIcon";
 import { SettingIcon } from "./icons/SettingIcon";
 import { Activity, useRef } from "react";
-import { UIButton } from "./ui/UIButton";
 import { useAuthStore } from "../auth/store/auth.store";
 import { useIsMobile } from "../hooks/useIsMobile";
 import { Logo } from "./Logo";
