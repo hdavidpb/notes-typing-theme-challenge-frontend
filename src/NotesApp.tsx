@@ -34,7 +34,7 @@ function App() {
       <ThemeProvider>
         <RouterProvider router={appRouter} />
       </ThemeProvider>
-      {/* <ReactQueryDevtools /> */}
+      <ReactQueryDevtools />
     </QueryClientProvider>
   );
 }
