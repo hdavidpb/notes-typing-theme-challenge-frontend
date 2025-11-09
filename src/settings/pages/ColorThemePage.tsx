@@ -11,7 +11,7 @@ const ColorThemePage = () => {
 
   return (
     <div className="w-full flex flex-col justify-start items-start">
-      <div className="w-[528px] flex flex-col justify-start items-start">
+      <div className="md:w-[528px] w-full flex flex-col justify-start items-start">
         <h2 className="mb-1 font-semibold">Color Theme</h2>
         <h3 className="text-sm">Choose your color theme:</h3>
 

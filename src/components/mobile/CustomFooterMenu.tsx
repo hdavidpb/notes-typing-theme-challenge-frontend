@@ -1,29 +1,22 @@
+import { Link, useSearchParams } from "react-router";
+import { ArchiveIcon } from "../icons/ArchiveIcon";
 
-export const CustomFooterMenu = () => {
+export const CustomArchivedButton = () => {
+  const [searchParams] = useSearchParams();
+
+  const typeSearch = (searchParams.get("type") || "") as "active" | "archived";
   return (
-    <div className="w-full flex justify-between items-center">
+    <div className="absolute w-12 h-12 rounded-full flex justify-center items-center bottom-4 left-4 bg-white dark:bg-neutral-900  shadow-xl md:hidden">
+      <Link
+        to="/notes?type=archived"
 
-        <div className="w-20 h-[50px] rounded-sm flex flex-col justify-center items-center text-xs">
-            <span>Home</span>
-
-        </div>
-           <div className="w-20 h-[50px] rounded-sm flex flex-col justify-center items-center text-xs">
-            <span>Home</span>
-
-        </div>
-           <div className="w-20 h-[50px] rounded-sm flex flex-col justify-center items-center text-xs">
-            <span>Home</span>
-
-        </div>
-           <div className="w-20 h-[50px] rounded-sm flex flex-col justify-center items-center text-xs">
-            <span>Home</span>
-
-        </div>
-           <div className="w-20 h-[50px] rounded-sm flex flex-col justify-center items-center text-xs">
-            <span>Home</span>
-
-        </div>
-
+      >
+        <ArchiveIcon
+          width={20}
+          height={20}
+          currentColor={typeSearch === "archived" ? "text-blue-500" : ""}
+        />
+      </Link>
     </div>
-  )
-}
+  );
+};

@@ -11,7 +11,7 @@ const AppLayout = () => {
       <Activity mode={isMobile?"hidden":"visible"}>
         <Sidebar />
       </Activity>
-      <div className="flex-1 flex flex-col justify-start items-center">
+      <div className="flex-1   flex flex-col justify-start items-center">
         <CustomNavbar />
         <Outlet />
       </div>
