@@ -6,6 +6,9 @@ import { Activity } from "react";
 
 const AppLayout = () => {
   const isMobile = useIsMobile();
+
+  
+
   return (
     <main className="w-full flex justify-start items-stretch">
       <Activity mode={isMobile?"hidden":"visible"}>

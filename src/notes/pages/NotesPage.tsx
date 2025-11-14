@@ -44,7 +44,14 @@ const NotesPage = () => {
   return (
     <Activity mode={isMobile && !noteId ? "hidden" : "visible"}>
       <>
-        <NoteContent note={data} onSubmit={onSubmit} />
+        <NoteContent
+          note={data}
+          onSubmit={onSubmit}
+          handleDeleteNote={handleDeleteNote}
+          isPendingToDelete={deleteNoteMutation.isPending}
+          handleToggleNote={handleUpdateToggleStatusNote}
+          isPendingToggleNote={updateNoteStatusMutation.isPending}
+        />
         <Activity mode={isMobile ? "hidden" : "visible"}>
           {data.updatedAt && (
             <NoteActions
